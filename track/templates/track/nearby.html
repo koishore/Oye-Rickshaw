@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <title>Nearby</title>
+</head>
+<body>
+  <div class='container'>
+    <p><a href = "{% url 'index' %}"> < Go Home</a></p>
+    <h2>Search for drivers in 200m radius</h2>
+    <div class="row center">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input id = "latitude" name="latitude" type="text" class="validate" value="{{request.GET.latitude}}">
+            <label for="latitude">Latitude</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="longitude" name = 'longitude' type="text" class="validate" value="{{request.GET.longitude}}">
+            <label for="longitude">Longitude</label>
+          </div>
+        </div>
+        <input class="waves-effect waves-light btn" type="submit" value="Search" />
+      </form>
+    </div>
+    {% if rickshaws %}
+    <div class = "container">
+    <p align = 'center'>{{ number }} results found near your location</p>
+    </div>
+    <div class="row">
+    {% for rickshaw in rickshaws %}
+      <div class="col s12 m4">
+        <div class="card">
+          <div class="card-image">
+            <img src="https://cdn5.vectorstock.com/i/thumb-large/23/59/user-icon-vector-3172359.jpg">
+            <span class="card-title black-text">{{rickshaw.name}}</span>
+          </div>
+          <div class="card-content">
+            <p>
+            Vehicle Type: {{ rickshaw.type }}
+            <br>
+            License Plate: {{ rickshaw.license }}
+            <br>
+            Latitude: {{ rickshaw.lat }}
+            <br>
+            Longitude: {{ rickshaw.long }}
+            </p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    {% else %}
+    <div>
+    <p align = 'center'>{{ number }} results found near your location</p>
+    </div>
+    {%endif%}
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
